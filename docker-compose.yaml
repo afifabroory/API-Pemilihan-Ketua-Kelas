@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  php:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www/html
+  
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - api-pemilihan:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+
+volumes:
+  api-pemilihan:
