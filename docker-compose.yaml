@@ -1,20 +1,29 @@
 version: '3'
 
 services:
-  php:
+  web:
     build: .
     ports:
       - 80:80
     volumes:
       - ./src:/var/www/html
+    depends_on:
+      - db
   
-  mysql:
+  # db services should start first before PHP
+  db:
     image: mysql:5.7
     volumes:
       - api-pemilihan:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: 
+      MYSQL_ROOT_PASSWORD: V3ry@S4f3!p4sw0rds!
+      MYSQL_DATABASE: e_voting
+    ports:
+      - 3306:3306
+    # Make MySQL accesible from host
+    expose:
+      - 3306
+
 
 volumes:
   api-pemilihan:
