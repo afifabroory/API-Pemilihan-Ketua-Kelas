@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\VoterController;
 use App\Http\Controllers\CandidateController;
 
