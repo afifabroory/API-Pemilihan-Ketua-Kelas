@@ -2,6 +2,9 @@
 FROM php:apache
 RUN docker-php-ext-install pdo_mysql
 
+# Apache rewriting fix https://stackoverflow.com/questions/32281294/lumen-simple-route-request-doesnt-work
+RUN a2enmod rewrite
+
 # Change default location of APACHE_DOCUMENT_ROOT from /var/www/html/ to /var/www/html/public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN apt-get update && apt-get install -y sed && \
