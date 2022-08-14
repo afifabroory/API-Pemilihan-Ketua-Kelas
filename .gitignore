@@ -1,3 +1,5 @@
 # Ignore for privacy reason
 SQL/voter_data.sql
+SQL/token_data.sql
+
 *.bak
