@@ -73,4 +73,10 @@ class VoterController extends Controller
         return response(null, 201)
             ->header('Access-Control-Allow-Origin', 'http://localhost');
     }
+
+    public function cors() {
+        return response('')
+        ->header('Access-Control-Allow-Headers', 'Content-type')
+        ->header('Access-Control-Allow-Origin', 'http://localhost');
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\VoterController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\DataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,10 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/voter/verify', 'VoterController@verify');
     $router->post('/vote', 'VoterController@vote');
-    $router->options('/vote', function() {
-        return response('')
-            ->header('Access-Control-Allow-Headers', 'Content-type')
-            ->header('Access-Control-Allow-Origin', 'http://localhost');
-    });
+    $router->options('/vote', "VoterController@cors");
 
     $router->get('/candidate', 'CandidateController@index');
+
+    $router->get('/voting/voter', 'DataController@voter');
+    $router->get('/voting/result', 'DataController@result');
 });
