@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\NotYetVoted;
-use App\Models\Voter;
 use App\Models\Vote;
 use App\Models\Token;
 
@@ -15,26 +14,18 @@ class VoterController extends Controller
     public function verify(Request $req) {
         $nim = $req->input('nim');
 
-        if (is_null(NotYetVoted::where('nim', $nim)->first())) {
-            return response([
-                'valid' => false,
-                'message' => "Hak suara untuk $nim tidak terdaftar"
-            ])
-            ->header('Content-type', 'application/json')
-            ->header('Access-Control-Allow-Origin', 'http://localhost');
-        }
-
         $isValid = !is_null(NotYetVoted::where('nim', $nim)->first());
 
         $token = hash('sha256', Str::random(60));
         $data = [
             'voter' => $nim,
             'valid' => $isValid,
-            'token' => $token,
         ];
 
         if ($nim != '' && !$isValid) 
-            $data['message'] = 'Hak suara sudah digunakan';
+            $data['message'] = 'Hak suara sudah digunakan atau tidak terdaftar';
+        else 
+            $data['token'] = $token;
 
         Token::where('Voter_NIM', $nim)
             ->update(['token' => $token]);
@@ -48,7 +39,6 @@ class VoterController extends Controller
         $nim = $req->input('nim');
         $candidate = $req->input('candidate');
         $token = $req->input('token');
-
 
         if (is_null(NotYetVoted::where('nim', $nim)->first()) == true) {
             Token::where('Voter_NIM', $nim)
