@@ -21,6 +21,11 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/voter/verify', 'VoterController@verify');
     $router->post('/vote', 'VoterController@vote');
+    $router->options('/vote', function() {
+        return response('')
+            ->header('Access-Control-Allow-Headers', 'Content-type')
+            ->header('Access-Control-Allow-Origin', 'http://localhost');
+    });
 
     $router->get('/candidate', 'CandidateController@index');
 });
